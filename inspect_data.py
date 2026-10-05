@@ -1,32 +1,24 @@
 ## First inspection
 
 import pandas as pd
-
-# file_path = "Data/transactions_part_01.csv"
-
-# df = pd.read_csv(file_path)
-
-# print("Shape:", df.shape)
-# print("\nColumns:")
-# print(df.columns.tolist())
-
-# print("\nFirst 5 rows:")
-# print(df.head())
-
-# print("\nData types:")
-# print(df.dtypes)
-
-# print("\nMissing values:")
-# print(df.isna().sum())
-
-## Second inspection
-# import pandas as pd
+from analysis_tools import calculate_baskets
 
 file_path = "Data/transactions_part_01.csv"
 
 df = pd.read_csv(file_path)
 
 print("Shape:", df.shape)
+print("\nColumns:")
+print(df.columns.tolist())
+
+print("\nFirst 5 rows:")
+print(df.head())
+
+print("\nData types:")
+print(df.dtypes)
+
+print("\nMissing values:")
+print(df.isna().sum())
 
 print("\nUnique customers:")
 print(df["PERSON_PUBLIC_KEY"].nunique())
@@ -45,11 +37,7 @@ print(df["PRODUCT_CATEGORY"].value_counts().head(10))
 
 # # Let's investigate the baskets
 print("\nNumber of baskets:")
-print(
-    df[["PERSON_PUBLIC_KEY", "DATE", "CHANNEL"]]
-    .drop_duplicates()
-    .shape[0]
-)
+print(calculate_baskets(df))
 
 basket_categories = (
     df[["PERSON_PUBLIC_KEY", "DATE", "CHANNEL", "PRODUCT_CATEGORY"]]
@@ -66,3 +54,4 @@ print(basket_categories.min())
 
 print("\nMaximum categories in a basket:")
 print(basket_categories.max())
+
