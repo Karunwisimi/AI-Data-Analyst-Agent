@@ -49,3 +49,7 @@ def calculate_summary(df):
     })
 
     return summary
+
+def group_and_count(df, column):
+    grouped_counts = df.groupby(column).size().reset_index(name='count')
+    return grouped_counts
