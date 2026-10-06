@@ -17,6 +17,10 @@ def filter_data(df, column, value):
     filtered_df = df[df[column] == value]
     return filtered_df
 
+def count_filtered_rows(df, column, value):
+    filtered_df = filter_data(df, column, value)
+    return filtered_df.shape[0]
+
 def calculate_summary(df):
     summary = {
         "shape": df.shape,

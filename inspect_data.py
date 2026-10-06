@@ -5,7 +5,8 @@ from analysis_tools import (
     calculate_baskets,
     get_top_product_categories,
     filter_data,
-    calculate_summary
+    calculate_summary,
+    count_filtered_rows
 )
 
 file_path = "Data/transactions_part_01.csv"
@@ -65,3 +66,6 @@ print(filter_data(df, "CHANNEL", "ONLINE").head())
 
 print("\nDataset summary:")
 print(calculate_summary(df))
+
+print("\nNumber of ONLINE transactions:")
+print(count_filtered_rows(df, "CHANNEL", "ONLINE"))
