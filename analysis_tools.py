@@ -12,3 +12,7 @@ def calculate_baskets(df):
 def get_top_product_categories(df, n=10):
     top_categories = df["PRODUCT_CATEGORY"].value_counts().head(n)
     return top_categories
+
+def filter_data(df, column, value):
+    filtered_df = df[df[column] == value]
+    return filtered_df

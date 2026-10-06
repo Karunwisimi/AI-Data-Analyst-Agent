@@ -1,7 +1,7 @@
 ## First inspection
 
 import pandas as pd
-from analysis_tools import calculate_baskets, get_top_product_categories
+from analysis_tools import calculate_baskets, get_top_product_categories, filter_data
 
 file_path = "Data/transactions_part_01.csv"
 
@@ -54,3 +54,6 @@ print(basket_categories.min())
 
 print("\nMaximum categories in a basket:")
 print(basket_categories.max())
+
+print("\nONLINE transactions:")
+print(filter_data(df, "CHANNEL", "ONLINE").head())
