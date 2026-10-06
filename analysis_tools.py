@@ -8,3 +8,7 @@ def calculate_baskets(df):
     )
 
     return baskets
+
+def get_top_product_categories(df, n=10):
+    top_categories = df["PRODUCT_CATEGORY"].value_counts().head(n)
+    return top_categories

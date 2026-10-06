@@ -1,7 +1,7 @@
 ## First inspection
 
 import pandas as pd
-from analysis_tools import calculate_baskets
+from analysis_tools import calculate_baskets, get_top_product_categories
 
 file_path = "Data/transactions_part_01.csv"
 
@@ -33,7 +33,7 @@ print("\nUnique product categories:")
 print(df["PRODUCT_CATEGORY"].nunique())
 
 print("\nTop 10 product categories:")
-print(df["PRODUCT_CATEGORY"].value_counts().head(10))
+print(get_top_product_categories(df))
 
 # # Let's investigate the baskets
 print("\nNumber of baskets:")
@@ -54,4 +54,3 @@ print(basket_categories.min())
 
 print("\nMaximum categories in a basket:")
 print(basket_categories.max())
-
