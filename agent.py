@@ -1,6 +1,4 @@
-
 import ollama
-import pandas as pd
 from tools import get_customer_count, get_top_categories, get_channel_count
 
 tools = [
@@ -16,6 +14,7 @@ tools = [
             }
         }
     },
+
     {
         "type": "function",
         "function": {
@@ -33,6 +32,7 @@ tools = [
             }
         }
     },
+    
     {
         "type": "function",
         "function": {
@@ -51,8 +51,6 @@ tools = [
         }
     }
 ]
-
-df = pd.read_csv("Data/transactions_part_01.csv")
 
 user_question = input("What would you like to know about the dataset? ")
 
@@ -78,12 +76,12 @@ if response.message.tool_calls:
     print("Arguments:", arguments)
 
     if tool_name == "get_customer_count":
-        result = get_customer_count(df)
-        print(f"The dataset contains {result:,} unique customers.")
+        result = get_customer_count()
+        print(f"The dataset contains {result:,} unique customers across all files.")
 
     elif tool_name == "get_top_categories":
         n = arguments.get("n", 10)
-        result = get_top_categories(df, n)
+        result = get_top_categories(n)
 
         print("Top product categories:")
         for category, count in result.items():
@@ -95,7 +93,7 @@ if response.message.tool_calls:
         if channel not in ["ONLINE", "OFFLINE"]:
             print("Sorry, I can only count ONLINE or OFFLINE records.")
         else:
-            result = get_channel_count(df, channel)
+            result = get_channel_count(channel)
             print(f"There are {result:,} {channel.lower()} records.")
 
     else:
