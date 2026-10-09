@@ -1,5 +1,9 @@
 import pandas as pd
-from analysis_tools import count_filtered_rows, calculate_summary
+from analysis_tools import (
+    count_filtered_rows,
+    calculate_summary,
+    get_top_product_categories
+)
 
 df = pd.read_csv("Data/transactions_part_01.csv")
 
@@ -14,3 +18,8 @@ elif "offline" in question.lower():
 elif "customers" in question.lower():
     summary = calculate_summary(df)
     print(f"There are {summary['unique_customers']} customers in the dataset.")
+elif "category" in question.lower() or "popular product" in question.lower():
+    result = get_top_product_categories(df, n=1)
+    print(f"The most popular product category is {result.index[0]}, with {result.iloc[0]} records.")
+else:
+    print("Sorry, I don't know how to answer that question yet.")
