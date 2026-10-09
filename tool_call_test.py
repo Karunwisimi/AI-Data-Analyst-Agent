@@ -1,6 +1,6 @@
 import ollama
 import pandas as pd
-from tools import get_customer_count, get_top_categories
+from tools import get_customer_count, get_top_categories, get_channel_count
 
 tools = [
     {
@@ -15,6 +15,7 @@ tools = [
             }
         }
     },
+
     {
         "type": "function",
         "function": {
@@ -31,7 +32,26 @@ tools = [
                 "required": []
             }
         }
+    },
+    
+    {
+        "type": "function",
+        "function": {
+            "name": "get_channel_count",
+            "description": "Returns the number of records for a specified sales channel, such as ONLINE or OFFLINE.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "channel": {
+                        "type": "string",
+                        "description": "The sales channel to count: ONLINE or OFFLINE."
+                    }
+                },
+                "required": ["channel"]
+            }
+        }
     }
+    
 ]
 
 
@@ -61,10 +81,14 @@ if response.message.tool_calls:
     
     if tool_call.function.name == "get_customer_count":
         result = get_customer_count(df)
-
+   
     elif tool_call.function.name == "get_top_categories":
         n = tool_call.function.arguments.get("n", 10)
         result = get_top_categories(df, n)
+
+    elif tool_call.function.name == "get_channel_count":
+        channel = tool_call.function.arguments.get("channel", "")
+        result = get_channel_count(df, channel)
 
     else:
         result = "Unknown tool requested."
@@ -76,12 +100,16 @@ if response.message.tool_calls:
         "content": str(result)
     })
 
-    final_response = ollama.chat(
-        model="qwen2.5:3b",
-        messages=messages
-    )
-
-    print(final_response.message.content)
+    if tool_call.function.name == "get_top_categories":
+        print("Top product categories:")
+        for category, count in result.items():
+            print(f"{category}: {count:,} records")
+    else:
+        final_response = ollama.chat(
+            model="qwen2.5:3b",
+            messages=messages
+            )
+        print(final_response.message.content)
 
 else:
-    print(response.message.content)    
+    print(response.message.content)
