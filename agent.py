@@ -55,7 +55,6 @@ tools = [
 
 user_question = input("What would you like to know about the dataset? ")
 
-
 question_lower = user_question.lower()
 
 unsupported_metrics = [
@@ -63,7 +62,15 @@ unsupported_metrics = [
     "profit",
     "price",
     "quantity sold",
-    "units sold"
+    "units sold",
+    "earnings",
+    "sales value",
+    "total sales",
+    "money made",
+    "how much money",
+    "how much did",
+    "how many units",
+    "average selling price"
 ]
 
 if any(metric in question_lower for metric in unsupported_metrics):
