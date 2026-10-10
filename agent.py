@@ -52,9 +52,42 @@ tools = [
     }
 ]
 
+
 user_question = input("What would you like to know about the dataset? ")
 
+
+question_lower = user_question.lower()
+
+unsupported_metrics = [
+    "revenue",
+    "profit",
+    "price",
+    "quantity sold",
+    "units sold"
+]
+
+if any(metric in question_lower for metric in unsupported_metrics):
+    print(
+        "Sorry, I cannot calculate that metric because the dataset "
+        "does not contain the required price, revenue, profit, "
+        "or quantity information."
+    )
+    exit()
+
 messages = [
+    {
+        "role": "system",
+        "content": (
+            "You are an AI data analyst working with a retail transaction dataset. "
+            "The dataset contains only four columns: PERSON_PUBLIC_KEY, DATE, "
+            "CHANNEL, and PRODUCT_CATEGORY. "
+            "It does not contain prices, revenue, quantities sold, or profit. "
+            "Only answer questions that can be supported by the available data "
+            "and tools. If a question requires missing data or an unavailable "
+            "analysis tool, clearly explain the limitation. Never invent figures "
+            "or claim that an analysis was performed when it was not."
+        )
+    },
     {
         "role": "user",
         "content": user_question
